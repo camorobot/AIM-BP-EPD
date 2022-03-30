@@ -1,43 +1,48 @@
+// vars die hier staan kreeg ik op geen enlkele mogelijkheid in het eigen "hardware tabje".
+
+// word gebruikt om te kijken of er op een knop is gedrukt.
+// zoja dan word de 0 naar een 1 veranderd.
+int buttonsPressed[] = {0,0,0,0};
+int buttonsPressedTemp[] = {0,0};
+
+
 #include <Servo.h>
 
-int servoPos = 0;
-Servo myservo;
-
-void setup(){
-
-    pinMode(4,OUTPUT);
-    pinMode(5,OUTPUT);
-    pinMode(6,OUTPUT);
-    pinMode(7,OUTPUT);
-    pinMode(8,OUTPUT);
-    pinMode(9,OUTPUT);
-    pinMode(10,OUTPUT);
-    pinMode(11,OUTPUT);
-    pinMode(12,OUTPUT);
-    pinMode(13,OUTPUT);
-    pinMode(A2,OUTPUT);
-    pinMode(A3,OUTPUT);
-    pinMode(A4,OUTPUT);
-    pinMode(A5,OUTPUT);
-    pinMode(A1,OUTPUT);
-    digitalWrite(4,HIGH);
-    digitalWrite(5,HIGH);
-    digitalWrite(6,HIGH);
-    digitalWrite(7,HIGH);
-    digitalWrite(8,HIGH);
-    digitalWrite(9,HIGH);
-    digitalWrite(10,HIGH);
-    digitalWrite(11,HIGH);
-    digitalWrite(12,HIGH);
-    digitalWrite(13,HIGH);
-    digitalWrite(A2,HIGH);
-    digitalWrite(A3,HIGH);
-    digitalWrite(A4,HIGH);
-    digitalWrite(A5,HIGH);
-    myservo.attach(A0);
-    myservo.write(180);
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Serial setup.. Done");
+  Serial.println("Sero Setup...");
+  servoSetup();
+  Serial.println("Led setup...");
+  ledSetup();
+  Serial.println("Buttonhardware Setup...");
+  buttonHardwareSetup();
+  Serial.println("Button software Setup...");
+  buttonSetup();
+  Serial.println("Shiftregister etup...");
+  registerSetup();
+  Serial.println("Buzzer Setup...");
+  buzzerSetup();
+  Serial.println("Timers Setup...");
+  timerSetup();
+//  Serial.println("overgangStateMachine");
+//  overgangStateSetup();
 }
 
-void loop(){
-    // tone(A1, 1000);
+void loop() {
+  timerLoop();
+  buttonLoop();
+  if(buttonsPressed[0] == 1 || buttonsPressed[2] == 1){
+    Serial.println("FAKKA KNOP NOORD OF ZUID IS AAN");
+  }
+  Serial.println(buttonsPressed[0]);
+  Serial.println(buttonsPressed[1]);
+  Serial.println(buttonsPressed[2]);
+  Serial.println(buttonsPressed[3]);
+  Serial.println("Original /\ ||| temp \/");
+  Serial.println(buttonsPressedTemp[0]);
+  Serial.println(buttonsPressedTemp[1]);
+  // DEZE DELAY HEEFT NIKS TE MAKEN MET HET PROGRAMMA ZELF EN IS PUUR VOOR HET DEBUGGEN
+  // ::REMINDER - WEGHALEN::
+  delay(100);
 }
