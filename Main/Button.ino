@@ -245,7 +245,7 @@ void buttonNoordPressedEntry() {
 void buttonZuidPressedEntry() {
   // kijk of de trein er is. voer dan geen code uit.
   if (treinIsBezig) {
-    
+
     //1. check of noord groen heeft.
   } else if (buttonsPressed[0] == 1) {
     Serial.println("Noord heeft al groen");
@@ -288,14 +288,28 @@ void buttonOostPressedEntry() {
     treinIsBezig = true;
     // De trein kwam vauit oost
     // zet de lamp noord direct op geel en rood.
-    if (buttonsPressed[0] == 1) {
+    if (timerButtonNoordPressedEntryCurrentLightGreen) {
+      timerButtonNoordPressedEnteryCurrent = millis();
+      timerButtonNoordPressedEntryIsBezig = true;
+      ledControlSetLedOff(leds[1], leds[3]);
+      ledControlSetLedOn(leds[2], leds[2]);
+    }
+    else if (timerButtonZuidPressedEntryCurrentLightGreen){
+      timerButtonZuidPressedEnteryCurrent = millis();
+      timerButtonZuidPressedEntryIsBezig = true;
+      ledControlSetLedOff(leds[0], leds[4]);
+      ledControlSetLedOn(leds[5], leds[5]);
+    }
+    else if (buttonsPressed[0] == 1 && buttonsPressed[3] == 1) {
+      Serial.println("zet de lampen van noord direct op geel en rood");
       ledControlSetLedOff(leds[1], leds[3]);
       ledControlSetLedOn(leds[2], leds[2]);
       //      timerButtonNoordPressedEnteryCurrent = millis();
       timerButtonNoordPressedEntryIsBezig = true;
       timerButtonNoordPressedEntryCurrentLightGreen = true;
       //      zet de lamp zuid direct op geel en rood
-    } else if (buttonsPressed[2] == 1) {
+    } else if (buttonsPressed[2] == 1 && buttonsPressed[1] == 0) {
+      Serial.println("zet de lampen van zuid direct op geel en rood");
       ledControlSetLedOff(leds[4], leds[0]);
       ledControlSetLedOn(leds[5], leds[5]);
       //      timerButtonZuidPressedEnteryCurrent = millis();
@@ -329,19 +343,35 @@ void buttonWestPressedEntry() {
     Serial.println("De trein kwam vanuit west");
     // De trein kwam vauit west
     // zet de lamp noord direct op geel en rood.
-    if (buttonsPressed[0] == 1) {
+    if (timerButtonNoordPressedEntryCurrentLightGreen) {
+      timerButtonNoordPressedEnteryCurrent = millis();
+      timerButtonNoordPressedEntryIsBezig = true;
+      ledControlSetLedOff(leds[1], leds[3]);
+      ledControlSetLedOn(leds[2], leds[2]);
+    }
+    else if (timerButtonZuidPressedEntryCurrentLightGreen){
+      timerButtonZuidPressedEnteryCurrent = millis();
+      timerButtonZuidPressedEntryIsBezig = true;
+      ledControlSetLedOff(leds[0], leds[4]);
+      ledControlSetLedOn(leds[5], leds[5]);
+    }
+    else if (buttonsPressed[0] == 1 && buttonsPressed[1] == 1) {
+      Serial.println("zet de lampen van noord direct op geel en rood");
       ledControlSetLedOff(leds[1], leds[3]);
       ledControlSetLedOn(leds[2], leds[2]);
       //      timerButtonNoordPressedEnteryCurrent = millis();
       timerButtonNoordPressedEntryIsBezig = true;
       timerButtonNoordPressedEntryCurrentLightGreen = true;
       //      zet de lampen zuid direct op geel en rood
-    } else if (buttonsPressed[2] == 1) {
+    } else if (buttonsPressed[2] == 1 && buttonsPressed[1] == 1) {
+      Serial.println("zet de lampen van zuid direct op geel en rood");
       ledControlSetLedOff(leds[4], leds[0]);
       ledControlSetLedOn(leds[5], leds[5]);
       //      timerButtonZuidPressedEnteryCurrent = millis();
       timerButtonZuidPressedEntryIsBezig = true;
       timerButtonZuidPressedEntryCurrentLightGreen = true;
+    } else if (buttonsPressed[0] == 0) {
+      // hier even naar kijken want is onzeker of niet wel helemaal goed gaat.
     }
   }
 }
