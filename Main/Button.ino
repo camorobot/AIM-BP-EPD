@@ -293,6 +293,7 @@ void buttonOostPressedEntry() {
       timerButtonNoordPressedEntryIsBezig = true;
       ledControlSetLedOff(leds[1], leds[3]);
       ledControlSetLedOn(leds[2], leds[2]);
+      // er komt een trein aan, de oranje lamp kan na 2 sec beginnen met knipperen
     }
     else if (timerButtonZuidPressedEntryCurrentLightGreen){
       timerButtonZuidPressedEnteryCurrent = millis();

@@ -34,6 +34,10 @@ void ledControlSetLedOff (int led, int led2) {
   digitalWrite(led2, LOW);
 }
 
+int getLedStatus(int ledNumberArray){
+  return digitalRead(leds[ledNumberArray]);
+}
+
 // hiermee kunnen 2 leds tegelijk knipperen
 int blinkSpeed = 500; 
 unsigned long blinkPreviousMillis;

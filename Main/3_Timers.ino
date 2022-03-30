@@ -1,7 +1,9 @@
 boolean timerButtonNoordPressedEntryCurrentLightGreen = false;
 boolean timerButtonNoordPressedEntryCurrentLightYellow = false;
+boolean timerButtonNoordPressedEntryCurrentLightRed = false;
 boolean timerButtonZuidPressedEntryCurrentLightGreen = false;
 boolean timerButtonZuidPressedEntryCurrentLightYellow = false;
+boolean timerButtonZuidPressedEntryCurrentLightRed = false;
 boolean timerButtonNoordPressedEntryIsBezig = false;
 boolean timerButtonZuidPressedEntryIsBezig = false;
 boolean ontruimingstijd;
@@ -24,6 +26,19 @@ void timerSetup() {
 }
 
 void timerLoop() {
+  //  // word alleen aangeroepen als er een trein is.
+  //  if (treinIsBezig) {
+  //    ledControlLedsBlink(leds[2], leds[5]);
+  //  }
+  // zet de gele knipper licht uit nadat de trein weg is.
+  if ((treinIsNetWeg && getLedStatus(2) == HIGH) || (treinIsNetWeg && getLedStatus(5) == HIGH)) {
+    ledControlSetLedOff(leds[2], leds[5]);
+  }
+
+  if ((treinIsBezig && getLedStatus(3) == HIGH && getLedStatus(0) == HIGH)) {
+    ledControlLedsBlink(leds[2], leds[5]);
+  }
+
   // Timer voor het aanroepen van de stoplichten noord van groen -> geel
   if (timerButtonNoordPressedEntryIsBezig && timerButtonNoordPressedEntryCurrentLightGreen && ((millis() - timerButtonNoordPressedEnteryCurrent) >= timerButtonPressedEntryDelay)) {
     Serial.println("fakka we zijn net voor een keuze maken van groen of geel");
@@ -47,7 +62,7 @@ void timerLoop() {
     ledControlSetLedOn(leds[3], leds[0]);
     timerButtonNoordPressedEnteryCurrent = millis();
     timerButtonNoordPressedEntryCurrentLightYellow = false;
-    timerButtonNoordPressedEntryIsBezig = false;
+    timerButtonNoordPressedEntryCurrentLightRed = true;
     buttonsPressed[0] = 0;
     // start de ontruimingstimer
     ontruimingstijdCurrent = millis();
@@ -64,6 +79,7 @@ void timerLoop() {
       ledControlSetLedOn(leds[5], leds[5]);
       timerButtonZuidPressedEntryCurrentLightGreen = false;
       timerButtonZuidPressedEntryCurrentLightYellow = true;
+      timerButtonZuidPressedEntryCurrentLightRed = false;
       timerButtonZuidPressedEnteryCurrent = millis();
     }
   }
@@ -72,10 +88,11 @@ void timerLoop() {
     // draai hier een timer voor 2 sec en verander het licht naar geel
     Serial.println("Zet de lampen zuid op rood na 2 seconden...");
     // zet de lamp van zuid op rood
-    ledControlSetLedOff(leds[5], leds[0]);
+    ledControlSetLedOff(leds[5], leds[5]);
     ledControlSetLedOn(leds[0], leds[0]);
     timerButtonZuidPressedEnteryCurrent = millis();
     timerButtonZuidPressedEntryCurrentLightYellow = false;
+    timerButtonZuidPressedEntryCurrentLightRed = true;
     timerButtonZuidPressedEntryIsBezig = false;
     buttonsPressed[2] = 0;
     // start de ontruimingstimer
@@ -91,8 +108,9 @@ void timerLoop() {
       buttonZuidPressedEntry();
     }
   }
+
   // timer / logica voor het opnieuw aanroepen van de lichten als de trein net weg is.
-  if(!treinIsBezig && treinIsNetWeg){
+  if (!treinIsBezig && treinIsNetWeg) {
     Serial.println("Timer / Logic van treinNetWeg word gerunt.");
     treinIsNetWeg = false;
     // reset de knoppen van de trein overgang. (oost & west)
