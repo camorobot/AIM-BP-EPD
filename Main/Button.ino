@@ -271,19 +271,22 @@ void buttonOostPressedEntry() {
   if (buttonsPressed[3] == 1) {
     treinIsBezig = false;
     treinIsNetWeg = true;
+    treinIsNetWegRunOnce = true;
     // De trein kwam vanuit west
     // nu kunnen we de lampen weer aan laten gaan.
     // 1 krijg lampen van de array
     // 2 zet lampen aan
     // 3 reset de oost knop
-    Serial.println("De trein kwam vanaf west");
+    Serial.println("buttonOostPressedEntry - De trein kwam vanaf west");
     // reset de west knop
     //    buttonsPressed[3] = 0;
-    if (buttonsPressedTemp[0] == 1) {
-      buttonNoordPressedEntry();
-    } else if (buttonsPressedTemp[2] == 1) {
-      buttonZuidPressedEntry();
-    }
+//    if (buttonsPressedTemp[0] == 1) {
+//      Serial.println("buttonOostPressedEntry -> buttonNoordPressedEntry");
+//      buttonNoordPressedEntry();
+//    } else if (buttonsPressedTemp[2] == 1) {
+//      Serial.println("buttonOostPressedEntry -> buttonZuidPressedEntry");
+//      buttonZuidPressedEntry();
+//    }
   } else {
     treinIsBezig = true;
     // De trein kwam vauit oost
@@ -295,7 +298,7 @@ void buttonOostPressedEntry() {
       ledControlSetLedOn(leds[2], leds[2]);
       // er komt een trein aan, de oranje lamp kan na 2 sec beginnen met knipperen
     }
-    else if (timerButtonZuidPressedEntryCurrentLightGreen){
+    else if (timerButtonZuidPressedEntryCurrentLightGreen) {
       timerButtonZuidPressedEnteryCurrent = millis();
       timerButtonZuidPressedEntryIsBezig = true;
       ledControlSetLedOff(leds[0], leds[4]);
@@ -328,20 +331,23 @@ void buttonWestPressedEntry() {
   if (buttonsPressed[1] == 1) {
     treinIsBezig = false;
     treinIsNetWeg = true;
+    treinIsNetWegRunOnce = true;
     // reset de oost knop
     //    buttonsPressed[1] = 0;
     Serial.println("De trein kwam vanaf oost");
     // De trein kwam vanuit oost
     // Doe hier de logica van het opheffen van de trein.
     // als noord had gedrukt mag noord eerst.
-    if (buttonsPressedTemp[0] == 1) {
-      buttonNoordPressedEntry();
-    } else if (buttonsPressedTemp[2] == 1) {
-      buttonZuidPressedEntry();
-    }
+//    if (buttonsPressedTemp[0] == 1) {
+//      Serial.println("buttonWestPressedEntry -> buttonNoordPressedEntry");
+//      buttonNoordPressedEntry();
+//    } else if (buttonsPressedTemp[2] == 1) {
+//      Serial.println("buttonWestPressedEntry -> buttonZuidPressedEntry");
+//      buttonZuidPressedEntry();
+//    }
   } else {
     treinIsBezig = true;
-    Serial.println("De trein kwam vanuit west");
+    Serial.println("buttonWestPressedEntry - De trein kwam vanuit west");
     // De trein kwam vauit west
     // zet de lamp noord direct op geel en rood.
     if (timerButtonNoordPressedEntryCurrentLightGreen) {
@@ -350,7 +356,7 @@ void buttonWestPressedEntry() {
       ledControlSetLedOff(leds[1], leds[3]);
       ledControlSetLedOn(leds[2], leds[2]);
     }
-    else if (timerButtonZuidPressedEntryCurrentLightGreen){
+    else if (timerButtonZuidPressedEntryCurrentLightGreen) {
       timerButtonZuidPressedEnteryCurrent = millis();
       timerButtonZuidPressedEntryIsBezig = true;
       ledControlSetLedOff(leds[0], leds[4]);

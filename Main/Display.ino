@@ -19,16 +19,17 @@ int registerDisplay [7] {
 };
 
 void countdownDisplayFrom5To0Loop() {
-  if (displayTimerIsRunning) {
-    for (currentDisplayLoopNumber > 0; currentDisplayLoopNumber--;) {
-      if ((millis() - displayPrevious) >= DISPLAY_TIMER) {
-        sevenSegBlank();
-        sevenSegWrite(currentDisplayLoopNumber);
-        displayPrevious = 0;
-        if(currentDisplayLoopNumber <= 0){
-          currentDisplayLoopNumber = 7;
-        }
-      }
+  // als deze functie moet blijven worden geroepen om te zorgen dat het netjes afteld van 5 naar 0;
+  if (displayTimerIsRunning && ((millis() - displayPrevious) >= DISPLAY_TIMER)) {
+    displayPrevious = millis(); // // prevent this code being run more then once
+    Serial.println("Turned LED Off");
+    if(currentDisplayLoopNumber <= 0){
+      currentDisplayLoopNumber = 7;
+      displayTimerIsRunning = false;
+    } else{ 
+      sevenSegBlank();
+      sevenSegWrite(currentDisplayLoopNumber);
+      currentDisplayLoopNumber--;
     }
   }
 }

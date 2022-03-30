@@ -8,14 +8,19 @@ boolean timerButtonNoordPressedEntryIsBezig = false;
 boolean timerButtonZuidPressedEntryIsBezig = false;
 boolean ontruimingstijd;
 boolean treinIsNetWeg;
+boolean treinIsNetWegRunOnce;
 boolean treinIsBezig;
+boolean slagboomInBeweging = false;
+boolean buzzerMaakGeluidTijdensSlagboom = false;
 
 const int timerButtonPressedEntryDelay = 2000;
 const int ontruimingstijdDelay = 2000;
+const int slagboomOmNaarBenedenTeGaanDelay = 3500;
 
 unsigned long timerButtonNoordPressedEnteryCurrent = 0;
 unsigned long timerButtonZuidPressedEnteryCurrent = 0;
 unsigned long ontruimingstijdCurrent = 0;
+unsigned long slagboomInBewegingTijdCurrent = 0;
 
 void timerSetup() {
   timerButtonNoordPressedEntryIsBezig = false;
@@ -23,20 +28,36 @@ void timerSetup() {
   ontruimingstijd = false;
   treinIsBezig = false;
   treinIsNetWeg = false;
+  treinIsNetWegRunOnce = false;
 }
 
 void timerLoop() {
-  //  // word alleen aangeroepen als er een trein is.
-  //  if (treinIsBezig) {
-  //    ledControlLedsBlink(leds[2], leds[5]);
-  //  }
+  l();
+  // de reden dat deze in de timer loop staan is omdat ze allebij te maken hebben met het timen van de lichten aan en uit.
   // zet de gele knipper licht uit nadat de trein weg is.
-  if ((treinIsNetWeg && getLedStatus(2) == HIGH) || (treinIsNetWeg && getLedStatus(5) == HIGH)) {
-    ledControlSetLedOff(leds[2], leds[5]);
+  //  if ((treinIsNetWeg && getLedStatus(2) == HIGH) || (treinIsNetWeg && getLedStatus(2) == LOW)) {
+  //    ledControlSetLedOff(leds[2], leds[5]);
+  //  }
+  // zet de lampen op knipperen en de servo naar de beginstand
+  if (treinIsNetWeg && (getLedStatus(3) == HIGH) && getLedStatus(0) == HIGH) {
+    ledControlLedsBlink(leds[2], leds[5]);
+    moveServo(0);
   }
-
+  // word aangeroepen als de trein eris en dan gaan de gelelichten knipperen.
   if ((treinIsBezig && getLedStatus(3) == HIGH && getLedStatus(0) == HIGH)) {
     ledControlLedsBlink(leds[2], leds[5]);
+    Serial.println(getSlagboomBenenden());
+    // verander de servo naar slagboom gesloten
+    moveServo(90);
+  }
+
+  // buzzer blijft in totaal 3.5 sec afgaan ivm dat de servo zo super snel gaat.
+  if (slagboomInBeweging && ((millis() - slagboomInBewegingTijdCurrent) >= slagboomOmNaarBenedenTeGaanDelay)) {
+    buzzerMaakGeluidTijdensSlagboom = false;
+    slagboomInBewegingTijdCurrent = 0;
+    // zet de waarde op true, zodat de volgende keer de buzzer wel kan klinken.
+  } else if (!slagboomInBeweging) {
+    buzzerMaakGeluidTijdensSlagboom = true;
   }
 
   // Timer voor het aanroepen van de stoplichten noord van groen -> geel
@@ -110,16 +131,18 @@ void timerLoop() {
   }
 
   // timer / logica voor het opnieuw aanroepen van de lichten als de trein net weg is.
-  if (!treinIsBezig && treinIsNetWeg) {
+  if (!treinIsBezig && treinIsNetWegRunOnce && !treinIsNetWeg) {
     Serial.println("Timer / Logic van treinNetWeg word gerunt.");
-    treinIsNetWeg = false;
+    treinIsNetWegRunOnce = false;
     // reset de knoppen van de trein overgang. (oost & west)
     buttonsPressed[1] = 0;
     buttonsPressed[3] = 0;
+    // kijk of noord is gedrukt en doe die als eest
     if (buttonsPressedTemp[0] == 1) {
       Serial.println("De lampen van noord moeten aan.");
       buttonsPressedTemp[0] = 0;
       buttonNoordPressedEntry();
+      // kijk of zuid heeft gedrukt en die die dan.
     } else if (buttonsPressedTemp[1] == 1) {
       Serial.println("De lampen van zuid moeten aan.");
       buttonsPressedTemp[1] = 0;
