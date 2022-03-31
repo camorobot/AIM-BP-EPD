@@ -12,6 +12,7 @@
 int leds[] = {10,4,5,6,7,8};
 const int AANTAL_LEDS = 6;
 const int AANTAL_ZELFDE_LEDS = 2;
+boolean knipperenIsBezig = false;
 
 
 void ledSetup() {
@@ -42,7 +43,7 @@ int getLedStatus(int ledNumberArray){
 int blinkSpeed = 500; 
 unsigned long blinkPreviousMillis;
 void ledControlLedsBlink (int led1, int led2) {
-  if (millis() - blinkPreviousMillis >= blinkSpeed) {        
+  if (knipperenIsBezig && (millis() - blinkPreviousMillis >= blinkSpeed)) {        
     blinkPreviousMillis = millis();                              
     digitalWrite(led1, !digitalRead(led1));
     digitalWrite(led2, !digitalRead(led2));                   

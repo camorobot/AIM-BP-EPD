@@ -32,6 +32,7 @@ void loop() {
   timerLoop();
   buttonAndStateLoop();
   countdownDisplayFrom5To0Loop();
+  Serial.println(getLedStatus(5));
   if(buttonsPressed[0] == 1 || buttonsPressed[2] == 1){
     Serial.println("FAKKA KNOP NOORD OF ZUID IS AAN");
   }

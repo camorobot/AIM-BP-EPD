@@ -388,6 +388,10 @@ void resetCompleteEntry(){
   for(int buttonNumberInArray = 0; buttonNumberInArray < AANTAL_BUTTONS; buttonNumberInArray++){
     setButtonsPressed(buttonNumberInArray, false);
   }
+  for(int ledsNumberInArray = 0; ledsNumberInArray < AANTAL_LEDS; ledsNumberInArray++){
+    ledControlSetLedOff(leds[2],leds[5]);
+    ledControlSetLedOff(leds[1],leds[4]);
+  }
 }
 
 //

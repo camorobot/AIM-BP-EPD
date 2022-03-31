@@ -40,11 +40,13 @@ void timerLoop() {
   //  }
   // zet de lampen op knipperen en de servo naar de beginstand
   if (treinIsNetWeg && (getLedStatus(3) == HIGH) && getLedStatus(0) == HIGH) {
+    knipperenIsBezig = true;
     ledControlLedsBlink(leds[2], leds[5]);
     moveServo(0);
   }
   // word aangeroepen als de trein eris en dan gaan de gelelichten knipperen.
   if ((treinIsBezig && getLedStatus(3) == HIGH && getLedStatus(0) == HIGH)) {
+    knipperenIsBezig = true;
     ledControlLedsBlink(leds[2], leds[5]);
     Serial.println(getSlagboomBenenden());
     // verander de servo naar slagboom gesloten

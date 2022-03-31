@@ -34,11 +34,12 @@ void moveServo( int goalPos ) {
       buzzerBeep3();
       buzzerBeep3IsRunning = true;
       if (displayTimerIsRunningDone) {
-        ledControlSetLedOff(leds[2], leds[5]);
+        knipperenIsBezig = false;
+        displayTimerIsRunningDone = false;
         displayTimerIsRunning = false;
         buzzerStop();
         buzzerBeep3IsRunning = false;
-        displayTimerIsRunningDone = false;
+        resetCompleteEntry();
         Serial.println("Als het goed is kan dit niet in een loop zitten");
       } 
       // nu moet het aftellen starten van de display en de buzzer moet 3 tikken doen en een pauze
