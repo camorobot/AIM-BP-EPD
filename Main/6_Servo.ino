@@ -8,6 +8,7 @@ const int SERVO_TIME_INTERVAL = 40; // ms
 const int SERVO_STEP_SIZE = 5;
 const int SLAGBOOM_IS_BENEDEN = 90;
 
+int servoAantalKeerGeopent = 1;
 int servoCurrentPos = 0;
 unsigned long servoPreviousMillis = 0;
 
@@ -39,6 +40,10 @@ void moveServo( int goalPos ) {
         displayTimerIsRunning = false;
         buzzerStop();
         buzzerBeep3IsRunning = false;
+        servoAantalKeerGeopent++;
+        Serial.print("De servo is ");
+        Serial.print(servoAantalKeerGeopent);
+        Serial.println(" aantal keer geopent.");
         resetCompleteEntry();
         Serial.println("Als het goed is kan dit niet in een loop zitten");
       } 
@@ -59,6 +64,14 @@ int getServoCurrentPos() {
 
 int getSlagboomBenenden() {
   return SLAGBOOM_IS_BENEDEN;
+}
+
+int getServoAantalKeerGeopent(){
+  return servoAantalKeerGeopent;
+}
+
+void setServoAantalKeerGeopent(){
+  servoAantalKeerGeopent = 0;
 }
 
 void l() {
