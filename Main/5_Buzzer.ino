@@ -1,43 +1,43 @@
 
-int buzzerPin = A1;
-int buzzerDelay = 100;
+const int BUZZERPIN = A1;
+const int BUZZERDELAY = 100;
 unsigned long buzzerPreviousMillis;
 unsigned long buzzerPreviousMillisBeep3;
 unsigned long buzzerPreviousMillisBeep3Timeout;
-int buzzerDelay3Beeps = 1250;
+const int BUZZERDELAYBEEPS3 = 1250;
 int aantalBeeps3 = 4;
 boolean buzzerBeep3IsRunning = false;
 
 void buzzerSetup() {
-  pinMode(buzzerPin, OUTPUT);
+  pinMode(BUZZERPIN, OUTPUT);
 }
 
 void buzzerBeep() {
-  if (millis() - buzzerPreviousMillis >= buzzerDelay) {
+  if (millis() - buzzerPreviousMillis >= BUZZERDELAY) {
     buzzerPreviousMillis = millis();
-    if (digitalRead(buzzerPin) == HIGH) {
-      noTone(buzzerPin);
+    if (digitalRead(BUZZERPIN) == HIGH) {
+      noTone(BUZZERPIN);
     } else {
-      tone(buzzerPin, 50);
+      tone(BUZZERPIN, 50);
     }
   }
 }
 
 void buzzerBeep3(){
-  if (buzzerBeep3IsRunning && (millis() - buzzerPreviousMillisBeep3 >= buzzerDelay - 15)) {
+  if (buzzerBeep3IsRunning && (millis() - buzzerPreviousMillisBeep3 >= BUZZERDELAY - 15)) {
     buzzerPreviousMillisBeep3 = millis();
-    noTone(buzzerPin);
+    noTone(BUZZERPIN);
     if(aantalBeeps3 <= 0){
-      if (millis() - buzzerPreviousMillisBeep3Timeout >= buzzerDelay3Beeps) {
-        noTone(buzzerPin);
+      if (millis() - buzzerPreviousMillisBeep3Timeout >= BUZZERDELAYBEEPS3) {
+        noTone(BUZZERPIN);
         buzzerPreviousMillisBeep3Timeout = millis();
         aantalBeeps3 = 4;
       }
     } else {
-      if (digitalRead(buzzerPin) == HIGH) {
-        noTone(buzzerPin);
+      if (digitalRead(BUZZERPIN) == HIGH) {
+        noTone(BUZZERPIN);
       } else {
-        tone(buzzerPin,50);
+        tone(BUZZERPIN,50);
         aantalBeeps3--;
       }
     }
@@ -46,9 +46,9 @@ void buzzerBeep3(){
 
 void buzzerStop() {
   // deley moest erin anders bleef die vaak nog door beepen ookal was de methode aangeroepen
-  if (millis() - buzzerPreviousMillis >= buzzerDelay) {
+  if (millis() - buzzerPreviousMillis >= BUZZERDELAY) {
     buzzerPreviousMillis = millis();
-    noTone(buzzerPin);
+    noTone(BUZZERPIN);
   }
 }
 

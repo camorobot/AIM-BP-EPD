@@ -47,7 +47,7 @@ void timerLoop() {
   if ((treinIsBezig && getLedStatus(3) == HIGH && getLedStatus(0) == HIGH)) {
     knipperenIsBezig = true;
     ledControlLedsBlink(leds[2], leds[5]);
-    Serial.println(getSlagboomBenenden());
+//    Serial.println(getSlagboomBenenden());
     // verander de servo naar slagboom gesloten
     moveServo(90);
   }

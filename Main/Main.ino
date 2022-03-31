@@ -37,9 +37,9 @@ void loop() {
       setServoAantalKeerGeopent();
     }
   }
-  Serial.print("De servo is ");
-  Serial.print(getServoAantalKeerGeopent());
-  Serial.println(" x keer geopent.");
+//  Serial.print("De servo is ");
+//  Serial.print(getServoAantalKeerGeopent());
+//  Serial.println(" x keer geopent.");
   //  Serial.println(getLedStatus(5));
   //  if(buttonsPressed[0] == 1 || buttonsPressed[2] == 1){
   //    Serial.println("FAKKA KNOP NOORD OF ZUID IS AAN");

@@ -5,8 +5,8 @@ Servo servo;
 const int SERVOPIN = 13;
 const int SERVO_START_POS = 0;
 const int SERVO_TIME_INTERVAL = 40; // ms
-const int SERVO_STEP_SIZE = 5;
-const int SLAGBOOM_IS_BENEDEN = 90;
+const int SERVO_STEP_SIZE = 1;
+const int SLAGBOOM_IS_BENEDEN = 89;
 
 int servoAantalKeerGeopent = 1;
 int servoCurrentPos = 0;
@@ -45,8 +45,7 @@ void moveServo( int goalPos ) {
         Serial.print(servoAantalKeerGeopent);
         Serial.println(" aantal keer geopent.");
         resetCompleteEntry();
-        Serial.println("Als het goed is kan dit niet in een loop zitten");
-      } 
+      }
       // nu moet het aftellen starten van de display en de buzzer moet 3 tikken doen en een pauze
       // 1 start de display van 5 naar 0
       // 2 buzzerBeep3() moet tegelijk afgaan.
@@ -66,10 +65,13 @@ int getSlagboomBenenden() {
   return SLAGBOOM_IS_BENEDEN;
 }
 
-int getServoAantalKeerGeopent(){
+int getServoAantalKeerGeopent() {
   return servoAantalKeerGeopent;
 }
 
-void setServoAantalKeerGeopent(){
+void setServoAantalKeerGeopent() {
   servoAantalKeerGeopent = 0;
+  Serial.print("De servo is ");
+  Serial.print("0");
+  Serial.println(" aantal keer geopent.");
 }

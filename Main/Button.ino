@@ -75,14 +75,14 @@ boolean buttonClicked(int buttonNumber) {
 void buttonAndStateLoop() {
   switch (buttonStateNoord) {
     case BUTTON_NOORD_STATE_RELEASED:
-      Serial.println("case: BUTTON_NOORD_STATE_RELEASED");
+//      Serial.println("case: BUTTON_NOORD_STATE_RELEASED");
       if (buttonHardwareDown(0)) {
         Serial.println("check: ButtonHardwareDown[0]");
         buttonStateNoord = BUTTON_NOORD_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_NOORD_STATE_CHECK_PRESSED:
-      Serial.println("case: BUTTON_NOORD_STATE_CHECK_PRESSED");
+//      Serial.println("case: BUTTON_NOORD_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(0)) {
         Serial.println("Button false positive");
         buttonStateNoord = BUTTON_NOORD_STATE_RELEASED;
@@ -95,7 +95,7 @@ void buttonAndStateLoop() {
       }
       break;
     case BUTTON_NOORD_STATE_PRESSED:
-      Serial.println("case: BUTTON_NOORD_STATE_PRESSED");
+//      Serial.println("case: BUTTON_NOORD_STATE_PRESSED");
       if (buttonHardwareUp(0)) {
         buttonStateNoord = BUTTON_NOORD_STATE_CHECK_RELEASED;
       }
@@ -111,14 +111,14 @@ void buttonAndStateLoop() {
   }
   switch (buttonStateZuid) {
     case BUTTON_ZUID_STATE_RELEASED:
-      Serial.println("case: BUTTON_ZUID_STATE_RELEASED");
+//      Serial.println("case: BUTTON_ZUID_STATE_RELEASED");
       if (buttonHardwareDown(2)) {
         Serial.println("check: ButtonHardwareDown[2]");
         buttonStateZuid = BUTTON_ZUID_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_ZUID_STATE_CHECK_PRESSED:
-      Serial.println("case: BUTTON_ZUID_STATE_CHECK_PRESSED");
+//      Serial.println("case: BUTTON_ZUID_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(2)) {
         Serial.println("Button false positive");
         buttonStateZuid = BUTTON_ZUID_STATE_RELEASED;
@@ -131,7 +131,7 @@ void buttonAndStateLoop() {
       }
       break;
     case BUTTON_ZUID_STATE_PRESSED:
-      Serial.println("case: BUTTON_ZUID_STATE_PRESSED");
+//      Serial.println("case: BUTTON_ZUID_STATE_PRESSED");
       if (buttonHardwareUp(2)) {
         buttonStateZuid = BUTTON_ZUID_STATE_CHECK_RELEASED;
       }
@@ -147,14 +147,14 @@ void buttonAndStateLoop() {
   }
   switch (buttonStateOost) {
     case BUTTON_OOST_STATE_RELEASED:
-      Serial.println("case: BUTTON_OOST_STATE_RELEASED");
+//      Serial.println("case: BUTTON_OOST_STATE_RELEASED");
       if (buttonHardwareDown(1)) {
         Serial.println("check: ButtonHardwareDown[1]");
         buttonStateOost = BUTTON_OOST_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_OOST_STATE_CHECK_PRESSED:
-      Serial.println("case: BUTTON_OOST_STATE_CHECK_PRESSED");
+//      Serial.println("case: BUTTON_OOST_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(1)) {
         Serial.println("Button false positive");
         buttonStateOost = BUTTON_OOST_STATE_RELEASED;
@@ -167,7 +167,7 @@ void buttonAndStateLoop() {
       }
       break;
     case BUTTON_OOST_STATE_PRESSED:
-      Serial.println("case: BUTTON_OOST_STATE_PRESSED");
+//      Serial.println("case: BUTTON_OOST_STATE_PRESSED");
       if (buttonHardwareUp(1)) {
         buttonStateOost = BUTTON_OOST_STATE_CHECK_RELEASED;
       }
@@ -183,14 +183,14 @@ void buttonAndStateLoop() {
   }
   switch (buttonStateWest) {
     case BUTTON_WEST_STATE_RELEASED:
-      Serial.println("case: BUTTON_WEST_STATE_RELEASED");
+//      Serial.println("case: BUTTON_WEST_STATE_RELEASED");
       if (buttonHardwareDown(3)) {
         Serial.println("check: ButtonHardwareDown[3]");
         buttonStateWest = BUTTON_WEST_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_WEST_STATE_CHECK_PRESSED:
-      Serial.println("case: BUTTON_WEST_STATE_CHECK_PRESSED");
+//      Serial.println("case: BUTTON_WEST_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(3)) {
         Serial.println("Button false positive");
         buttonStateWest = BUTTON_WEST_STATE_RELEASED;
@@ -203,7 +203,7 @@ void buttonAndStateLoop() {
       }
       break;
     case BUTTON_WEST_STATE_PRESSED:
-      Serial.println("case: BUTTON_WEST_STATE_PRESSED");
+//      Serial.println("case: BUTTON_WEST_STATE_PRESSED");
       if (buttonHardwareUp(3)) {
         buttonStateWest = BUTTON_WEST_STATE_CHECK_RELEASED;
       }
@@ -225,223 +225,94 @@ void buttonAndStateLoop() {
 }
 
 void buttonNoordPressedEntry() {
-  // kijk of de trein er is. voer dan geen code uit.
-  if (treinIsBezig) {
-
-    //1. check of zuid groen heeft.
-  } else if (buttonsPressed[2] == 1) {
-    Serial.println("Zuid heeft al groen");
-    // zuid heeft groen op dit moment.
-  } else {
-    // zuid heeft geen groen op dit moment.
-    // dus noord kan direct op groen gaan.
-    timerButtonNoordPressedEnteryCurrent = millis();
-    timerButtonNoordPressedEntryIsBezig = true;
-    timerButtonNoordPressedEntryCurrentLightGreen = true;
-    // zet noord op groen, en zuid op rood.
-    ledControlSetLedOff(leds[1], leds[3]);
-    ledControlSetLedOn(leds[1], leds[0]);
-  }
+  buttonNoordLogic();
 }
 void buttonZuidPressedEntry() {
-  // kijk of de trein er is. voer dan geen code uit.
-  if (treinIsBezig) {
-
-    //1. check of noord groen heeft.
-  } else if (buttonsPressed[0] == 1) {
-    Serial.println("Noord heeft al groen");
-    // noord heeft groen op dit moment.
-    // maak timer die kijkt wanneer de noord het licht op rood heeft
-  } else {
-    // noord heeft geen groen op dit moment.
-    // dus zuid kan direct op groen gaan.
-    timerButtonZuidPressedEnteryCurrent = millis();
-    timerButtonZuidPressedEntryIsBezig = true;
-    timerButtonZuidPressedEntryCurrentLightGreen = true;
-    // zet zuid op groen, en noord op rood.
-    ledControlSetLedOff(leds[0], leds[0]);
-    ledControlSetLedOn(leds[4], leds[3]);
-  }
+  buttonZuidLogic();
 }
 
 void buttonOostPressedEntry() {
-  // zet hier de status van de licht knoppen in een tijderelijke array *kan niet met een for loop ivm met andere lengthe van de arrays*
-  buttonsPressedTemp[0] = buttonsPressed[0];
-  buttonsPressedTemp[1] = buttonsPressed[2];
-  //1. check of de trein vanaf west kwam
-  if (buttonsPressed[3] == 1) {
-    treinIsBezig = false;
-    treinIsNetWeg = true;
-    treinIsNetWegRunOnce = true;
-    // De trein kwam vanuit west
-    // nu kunnen we de lampen weer aan laten gaan.
-    // 1 krijg lampen van de array
-    // 2 zet lampen aan
-    // 3 reset de oost knop
-    Serial.println("buttonOostPressedEntry - De trein kwam vanaf west");
-    // reset de west knop
-    //    buttonsPressed[3] = 0;
-//    if (buttonsPressedTemp[0] == 1) {
-//      Serial.println("buttonOostPressedEntry -> buttonNoordPressedEntry");
-//      buttonNoordPressedEntry();
-//    } else if (buttonsPressedTemp[2] == 1) {
-//      Serial.println("buttonOostPressedEntry -> buttonZuidPressedEntry");
-//      buttonZuidPressedEntry();
-//    }
-  } else {
-    treinIsBezig = true;
-    // De trein kwam vauit oost
-    // zet de lamp noord direct op geel en rood.
-    if (timerButtonNoordPressedEntryCurrentLightGreen) {
-      timerButtonNoordPressedEnteryCurrent = millis();
-      timerButtonNoordPressedEntryIsBezig = true;
-      ledControlSetLedOff(leds[1], leds[3]);
-      ledControlSetLedOn(leds[2], leds[2]);
-      // er komt een trein aan, de oranje lamp kan na 2 sec beginnen met knipperen
-    }
-    else if (timerButtonZuidPressedEntryCurrentLightGreen) {
-      timerButtonZuidPressedEnteryCurrent = millis();
-      timerButtonZuidPressedEntryIsBezig = true;
-      ledControlSetLedOff(leds[0], leds[4]);
-      ledControlSetLedOn(leds[5], leds[5]);
-    }
-    else if (buttonsPressed[0] == 1 && buttonsPressed[3] == 1) {
-      Serial.println("zet de lampen van noord direct op geel en rood");
-      ledControlSetLedOff(leds[1], leds[3]);
-      ledControlSetLedOn(leds[2], leds[2]);
-      //      timerButtonNoordPressedEnteryCurrent = millis();
-      timerButtonNoordPressedEntryIsBezig = true;
-      timerButtonNoordPressedEntryCurrentLightGreen = true;
-      //      zet de lamp zuid direct op geel en rood
-    } else if (buttonsPressed[2] == 1 && buttonsPressed[1] == 0) {
-      Serial.println("zet de lampen van zuid direct op geel en rood");
-      ledControlSetLedOff(leds[4], leds[0]);
-      ledControlSetLedOn(leds[5], leds[5]);
-      //      timerButtonZuidPressedEnteryCurrent = millis();
-      timerButtonZuidPressedEntryIsBezig = true;
-      timerButtonZuidPressedEntryCurrentLightGreen = true;
-    }
-  }
+  buttonOostLogic();
 }
 
 void buttonWestPressedEntry() {
-  // zet hier de status van de licht knoppen in een tijderelijke array *kan niet met een for loop ivm met andere lengthe van de arrays*
-  buttonsPressedTemp[0] = buttonsPressed[0];
-  buttonsPressedTemp[1] = buttonsPressed[2];
-  //1. check of de trein vanaf oost kwam
-  if (buttonsPressed[1] == 1) {
-    treinIsBezig = false;
-    treinIsNetWeg = true;
-    treinIsNetWegRunOnce = true;
-    // reset de oost knop
-    //    buttonsPressed[1] = 0;
-    Serial.println("De trein kwam vanaf oost");
-    // De trein kwam vanuit oost
-    // Doe hier de logica van het opheffen van de trein.
-    // als noord had gedrukt mag noord eerst.
-//    if (buttonsPressedTemp[0] == 1) {
-//      Serial.println("buttonWestPressedEntry -> buttonNoordPressedEntry");
-//      buttonNoordPressedEntry();
-//    } else if (buttonsPressedTemp[2] == 1) {
-//      Serial.println("buttonWestPressedEntry -> buttonZuidPressedEntry");
-//      buttonZuidPressedEntry();
-//    }
-  } else {
-    treinIsBezig = true;
-    Serial.println("buttonWestPressedEntry - De trein kwam vanuit west");
-    // De trein kwam vauit west
-    // zet de lamp noord direct op geel en rood.
-    if (timerButtonNoordPressedEntryCurrentLightGreen) {
-      timerButtonNoordPressedEnteryCurrent = millis();
-      timerButtonNoordPressedEntryIsBezig = true;
-      ledControlSetLedOff(leds[1], leds[3]);
-      ledControlSetLedOn(leds[2], leds[2]);
-    }
-    else if (timerButtonZuidPressedEntryCurrentLightGreen) {
-      timerButtonZuidPressedEnteryCurrent = millis();
-      timerButtonZuidPressedEntryIsBezig = true;
-      ledControlSetLedOff(leds[0], leds[4]);
-      ledControlSetLedOn(leds[5], leds[5]);
-    }
-    else if (buttonsPressed[0] == 1 && buttonsPressed[1] == 1) {
-      Serial.println("zet de lampen van noord direct op geel en rood");
-      ledControlSetLedOff(leds[1], leds[3]);
-      ledControlSetLedOn(leds[2], leds[2]);
-      //      timerButtonNoordPressedEnteryCurrent = millis();
-      timerButtonNoordPressedEntryIsBezig = true;
-      timerButtonNoordPressedEntryCurrentLightGreen = true;
-      //      zet de lampen zuid direct op geel en rood
-    } else if (buttonsPressed[2] == 1 && buttonsPressed[1] == 1) {
-      Serial.println("zet de lampen van zuid direct op geel en rood");
-      ledControlSetLedOff(leds[4], leds[0]);
-      ledControlSetLedOn(leds[5], leds[5]);
-      //      timerButtonZuidPressedEnteryCurrent = millis();
-      timerButtonZuidPressedEntryIsBezig = true;
-      timerButtonZuidPressedEntryCurrentLightGreen = true;
-    } else if (buttonsPressed[0] == 0) {
-      // hier even naar kijken want is onzeker of niet wel helemaal goed gaat.
-    }
-  }
+  buttonWestLogic();
 }
 
-void resetCompleteEntry(){
-  for(int buttonNumberInArray = 0; buttonNumberInArray < AANTAL_BUTTONS; buttonNumberInArray++){
-    setButtonsPressed(buttonNumberInArray, false);
-  }
-  for(int ledsNumberInArray = 0; ledsNumberInArray < AANTAL_LEDS; ledsNumberInArray++){
-    ledControlSetLedOff(leds[2],leds[5]);
-    ledControlSetLedOff(leds[1],leds[4]);
-  }
+void buttonNoordPressedDo() {
+//  Mag leeg zijn
+}
+void buttonZuidPressedDo() {
+//  Mag leeg zijn
 }
 
-//
-//void buttonReleasedEntry(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonReleasedDo(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonReleasedExit(int buttonNumber) {
-//  // <nothing>
-//}
+void buttonOostPressedDo() {
+//  Mag leeg zijn
+}
+
+void buttonWestPressedDo() {
+//  Mag leeg zijn
+}
+
+void buttonNoordPressedExit() {
+//  Mag leeg zijn
+}
+void buttonZuidPressedExit() {
+//  Mag leeg zijn
+}
+
+void buttonOostPressedExit() {
+//  Mag leeg zijn
+}
+
+void buttonWestPressedExit() {
+//  Mag leeg zijn
+}
+
+
+void buttonReleasedEntry(int buttonNumber) {
+ <nothing>
+}
+void buttonReleasedDo(int buttonNumber) {
+ <nothing>
+}
+void buttonReleasedExit(int buttonNumber) {
+ <nothing>
+}
 
 
 void buttonCheckPressedEntry(int buttonNumber) {
   buttonPrevious = millis();
 }
-//void buttonCheckPressedDo(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonCheckPressedExit(int buttonNumber) {
-//  // <nothing>
-//}
+void buttonCheckPressedDo(int buttonNumber) {
+ <nothing>
+}
+void buttonCheckPressedExit(int buttonNumber) {
+ <nothing>
+}
 
-//
-//void buttonPressedEntry(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonPressedDo(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonPressedExit(int buttonNumber) {
-//  // <nothing>
-//}
+
+void buttonPressedEntry(int buttonNumber) {
+ <nothing>
+}
+void buttonPressedDo(int buttonNumber) {
+ <nothing>
+}
+void buttonPressedExit(int buttonNumber) {
+ <nothing>
+}
 
 
 void buttonCheckReleasedEntry() {
   buttonPrevious = millis();
 }
-//void buttonCheckReleasedDo(int buttonNumber) {
-//  // <nothing>
-//}
-//void buttonCheckReleasedExit(int buttonNumber) {
-//  // <nothing>
-//}
-
-void setButtonsPressed(int buttonInArray, boolean state){
-  buttonsPressed[buttonInArray] = state;
+void buttonCheckReleasedDo(int buttonNumber) {
+ <nothing>
+}
+void buttonCheckReleasedExit(int buttonNumber) {
+ <nothing>
 }
 
-void setOvergangState(int state){
-  overgangState = state;
+void setButtonsPressed(int buttonInArray, boolean state) {
+  buttonsPressed[buttonInArray] = state;
 }
