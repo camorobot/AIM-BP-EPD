@@ -32,7 +32,6 @@ void timerSetup() {
 }
 
 void timerLoop() {
-  l();
   // de reden dat deze in de timer loop staan is omdat ze allebij te maken hebben met het timen van de lichten aan en uit.
   // zet de gele knipper licht uit nadat de trein weg is.
   //  if ((treinIsNetWeg && getLedStatus(2) == HIGH) || (treinIsNetWeg && getLedStatus(2) == LOW)) {

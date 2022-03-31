@@ -73,7 +73,3 @@ int getServoAantalKeerGeopent(){
 void setServoAantalKeerGeopent(){
   servoAantalKeerGeopent = 0;
 }
-
-void l() {
-  Serial.println(servo.read());
-}

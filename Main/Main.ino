@@ -39,7 +39,7 @@ void loop() {
   }
   Serial.print("De servo is ");
   Serial.print(getServoAantalKeerGeopent());
-  Serial.println(" aantal keer geopent.");
+  Serial.println(" x keer geopent.");
   //  Serial.println(getLedStatus(5));
   //  if(buttonsPressed[0] == 1 || buttonsPressed[2] == 1){
   //    Serial.println("FAKKA KNOP NOORD OF ZUID IS AAN");
@@ -53,5 +53,4 @@ void loop() {
   //  Serial.println(buttonsPressedTemp[1]);
   // DEZE DELAY HEEFT NIKS TE MAKEN MET HET PROGRAMMA ZELF EN IS PUUR VOOR HET DEBUGGEN
   // ::REMINDER - WEGHALEN::
-  delay(100);
 }
