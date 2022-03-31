@@ -1,7 +1,8 @@
 const int DISPLAY_TIMER = 1000;
 unsigned long displayPrevious = millis();
 //unsigned long displayCurrentTime = millis();
-boolean displayTimerIsRunning = true;
+boolean displayTimerIsRunning = false;
+boolean displayTimerIsRunningDone = false;
 int currentDisplayLoopNumber = 7;
 
 int registerDisplay [7] {
@@ -21,11 +22,12 @@ int registerDisplay [7] {
 void countdownDisplayFrom5To0Loop() {
   // als deze functie moet blijven worden geroepen om te zorgen dat het netjes afteld van 5 naar 0;
   if (displayTimerIsRunning && ((millis() - displayPrevious) >= DISPLAY_TIMER)) {
-    displayPrevious = millis(); // // prevent this code being run more then once
-    Serial.println("Turned LED Off");
+    displayPrevious = millis();
     if(currentDisplayLoopNumber <= 0){
       currentDisplayLoopNumber = 7;
+      displayTimerIsRunningDone = true;
       displayTimerIsRunning = false;
+      treinIsNetWeg = false;
     } else{ 
       sevenSegBlank();
       sevenSegWrite(currentDisplayLoopNumber);

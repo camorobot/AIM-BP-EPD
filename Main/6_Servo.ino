@@ -26,14 +26,25 @@ void moveServo( int goalPos ) {
     } else if (servoCurrentPos > goalPos) {
       servo.write(servo.read() - SERVO_STEP_SIZE);
       servoCurrentPos = servo.read();
-    } else if(treinIsNetWeg && (servoCurrentPos == goalPos)) {
-      treinIsNetWeg = false;
-      ledControlSetLedOff(leds[2], leds[5]);
+    } else if (treinIsNetWeg && (servoCurrentPos == goalPos)) {
+      // deze vals moet nog op true blijven anders gaan de lichten weer aan op het moment dat de trein weg is !!!! eerst moet de timer van de display naar 0 gaan
+      //      treinIsNetWeg = false;
+      displayTimerIsRunning = true;
       buzzerStop();
+      buzzerBeep3();
+      buzzerBeep3IsRunning = true;
+      if (displayTimerIsRunningDone) {
+        ledControlSetLedOff(leds[2], leds[5]);
+        displayTimerIsRunning = false;
+        buzzerStop();
+        buzzerBeep3IsRunning = false;
+        displayTimerIsRunningDone = false;
+        Serial.println("Als het goed is kan dit niet in een loop zitten");
+      } 
       // nu moet het aftellen starten van de display en de buzzer moet 3 tikken doen en een pauze
       // 1 start de display van 5 naar 0
-      // 
-    } else if (servoCurrentPos == goalPos){
+      // 2 buzzerBeep3() moet tegelijk afgaan.
+    } else if (servoCurrentPos == goalPos) {
       buzzerStop();
     }
     buzzerBeep();
@@ -49,6 +60,6 @@ int getSlagboomBenenden() {
   return SLAGBOOM_IS_BENEDEN;
 }
 
-void l(){
+void l() {
   Serial.println(servo.read());
 }

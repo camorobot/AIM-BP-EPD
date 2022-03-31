@@ -5,9 +5,6 @@
 int buttonsPressed[] = {0,0,0,0};
 int buttonsPressedTemp[] = {0,0};
 
-
-#include <Servo.h>
-
 void setup() {
   Serial.begin(115200);
   Serial.println("Serial setup.. Done");
@@ -27,11 +24,13 @@ void setup() {
   timerSetup();
 //  Serial.println("overgangStateMachine");
 //  overgangStateSetup();
+  Serial.println("Display Setup...");
+  sevenSegWrite(1);
 }
 
 void loop() {
   timerLoop();
-  buttonLoop();
+  buttonAndStateLoop();
   countdownDisplayFrom5To0Loop();
   if(buttonsPressed[0] == 1 || buttonsPressed[2] == 1){
     Serial.println("FAKKA KNOP NOORD OF ZUID IS AAN");

@@ -1,10 +1,3 @@
-// OvergangStateMachine VARS
-// vars werden niet herkend in het tabblad overgangstatemachine
-const int GEEN_KNOPPEN_GEDRUKT = 0;
-const int VOETGANGER_NOORD = 1;
-const int VOETGANGER_ZUID = 2;
-const int TREIN_AANWEZIG = 3;
-
 // Module Button
 const int BUTTON_NOORD_STATE_RELEASED = 0;
 const int BUTTON_NOORD_STATE_CHECK_PRESSED = 1;
@@ -29,6 +22,9 @@ const int BUTTON_WEST_STATE_CHECK_PRESSED = 13;
 const int BUTTON_WEST_STATE_PRESSED = 14;
 const int BUTTON_WEST_STATE_CHECK_RELEASED = 15;
 int buttonStateWest;
+
+const int RESET_COMPLETE = 99;
+int overgangState;
 
 const int BUTTON_INTERVAL = 10;
 unsigned long buttonPrevious;
@@ -76,7 +72,7 @@ boolean buttonClicked(int buttonNumber) {
   }
 }
 
-void buttonLoop() {
+void buttonAndStateLoop() {
   switch (buttonStateNoord) {
     case BUTTON_NOORD_STATE_RELEASED:
       Serial.println("case: BUTTON_NOORD_STATE_RELEASED");
@@ -220,6 +216,11 @@ void buttonLoop() {
         buttonStateWest = BUTTON_WEST_STATE_RELEASED;
       }
       break;
+  }
+  switch (overgangState) {
+    // [case RESET_COMPLETE] reset allewaarden weer naar het begin.
+    case RESET_COMPLETE:
+      resetCompleteEntry();
   }
 }
 
@@ -383,6 +384,12 @@ void buttonWestPressedEntry() {
   }
 }
 
+void resetCompleteEntry(){
+  for(int buttonNumberInArray = 0; buttonNumberInArray < AANTAL_BUTTONS; buttonNumberInArray++){
+    setButtonsPressed(buttonNumberInArray, false);
+  }
+}
+
 //
 //void buttonReleasedEntry(int buttonNumber) {
 //  // <nothing>
@@ -426,3 +433,11 @@ void buttonCheckReleasedEntry() {
 //void buttonCheckReleasedExit(int buttonNumber) {
 //  // <nothing>
 //}
+
+void setButtonsPressed(int buttonInArray, boolean state){
+  buttonsPressed[buttonInArray] = state;
+}
+
+void setOvergangState(int state){
+  overgangState = state;
+}
