@@ -1,49 +1,49 @@
-
+//
 const int BUZZERPIN = A1;
-const int BUZZERDELAY = 100;
+const int BUZZERDELAY = 200;
 unsigned long buzzerPreviousMillis;
 unsigned long buzzerPreviousMillisBeep3;
 unsigned long buzzerPreviousMillisBeep3Timeout;
-const int BUZZERDELAYBEEPS3 = 1250;
-int aantalBeeps3 = 4;
+const int BUZZERDELAYBEEPS3 = 2000;
+int aantalBeeps3 = 1;
 boolean buzzerBeep3IsRunning = false;
-
-void buzzerSetup() {
+//
+void buzzerControllSetup() {
   pinMode(BUZZERPIN, OUTPUT);
 }
-
+//
 void buzzerBeep() {
   if (millis() - buzzerPreviousMillis >= BUZZERDELAY) {
     buzzerPreviousMillis = millis();
     if (digitalRead(BUZZERPIN) == HIGH) {
-      noTone(BUZZERPIN);
+      digitalWrite(BUZZERPIN, LOW);
     } else {
-      tone(BUZZERPIN, 50);
+      digitalWrite(BUZZERPIN, HIGH);
     }
   }
 }
-
+//
 void buzzerBeep3(){
-  if (buzzerBeep3IsRunning && (millis() - buzzerPreviousMillisBeep3 >= BUZZERDELAY - 15)) {
+  if ((millis() - buzzerPreviousMillisBeep3 >= BUZZERDELAY)) {
     buzzerPreviousMillisBeep3 = millis();
-    noTone(BUZZERPIN);
+    digitalWrite(BUZZERPIN, LOW);
     if(aantalBeeps3 <= 0){
       if (millis() - buzzerPreviousMillisBeep3Timeout >= BUZZERDELAYBEEPS3) {
-        noTone(BUZZERPIN);
+        digitalWrite(BUZZERPIN, HIGH);
         buzzerPreviousMillisBeep3Timeout = millis();
-        aantalBeeps3 = 4;
+        aantalBeeps3 = 1;
       }
     } else {
+      aantalBeeps3--;
       if (digitalRead(BUZZERPIN) == HIGH) {
-        noTone(BUZZERPIN);
+        digitalWrite(BUZZERPIN,LOW);
       } else {
-        tone(BUZZERPIN,50);
-        aantalBeeps3--;
+        digitalWrite(BUZZERPIN,HIGH);
       }
     }
   }
 }
-
+//
 void buzzerStop() {
   // deley moest erin anders bleef die vaak nog door beepen ookal was de methode aangeroepen
   if (millis() - buzzerPreviousMillis >= BUZZERDELAY) {
@@ -51,7 +51,7 @@ void buzzerStop() {
     noTone(BUZZERPIN);
   }
 }
-
-void setBuzzerBeep3IsRunning(boolean state){
-  buzzerBeep3IsRunning = state;
-}
+//
+//void setBuzzerBeep3IsRunning(boolean state){
+//  buzzerBeep3IsRunning = state;
+//}

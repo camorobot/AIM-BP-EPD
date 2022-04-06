@@ -1,9 +1,9 @@
-
+//
 const int latchpin = 11;
 const int datapin = 12;
 const int clockpin = 9;
 
-void registerSetup() {
+void registerControllSetup() {
   pinMode(latchpin, OUTPUT);
   pinMode(clockpin, OUTPUT);
   pinMode(datapin, OUTPUT);
