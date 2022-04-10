@@ -9,7 +9,7 @@ void buttonHardwareSetup() {
 }
 
 boolean buttonHardwareDown(int buttonNumber) {
-  // Pull up resistor used.
+  // Pull down resistor used.
   return (digitalRead(buttons[buttonNumber]) == HIGH);
   // if pull down resistor is used, compare to HIGH
 }

@@ -46,14 +46,12 @@ void buttonControllSetup() {
 void buttonLoop() {
   switch (buttonStateNoord) {
     case BUTTON_NOORD_STATE_RELEASED:
-      //      Serial.println("case: BUTTON_NOORD_STATE_RELEASED");
       if (buttonHardwareDown(0)) {
         if(DEBUG_MODE){Serial.println("check: ButtonHardwareDown[0]");}
         buttonStateNoord = BUTTON_NOORD_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_NOORD_STATE_CHECK_PRESSED:
-      //      Serial.println("case: BUTTON_NOORD_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(0)) {
         if(DEBUG_MODE){Serial.println("Button false positive");}
         buttonStateNoord = BUTTON_NOORD_STATE_RELEASED;
@@ -101,7 +99,6 @@ void buttonLoop() {
       }
       break;
     case BUTTON_NOORD_STATE_PRESSED:
-      //      Serial.println("case: BUTTON_NOORD_STATE_PRESSED");
       if (buttonHardwareUp(0)) {
         buttonStateNoord = BUTTON_NOORD_STATE_CHECK_RELEASED;
       }
@@ -117,14 +114,12 @@ void buttonLoop() {
   }
   switch (buttonStateZuid) {
     case BUTTON_ZUID_STATE_RELEASED:
-      //      Serial.println("case: BUTTON_ZUID_STATE_RELEASED");
       if (buttonHardwareDown(2)) {
         if(DEBUG_MODE){Serial.println("check: ButtonHardwareDown[2]");}
         buttonStateZuid = BUTTON_ZUID_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_ZUID_STATE_CHECK_PRESSED:
-      //      Serial.println("case: BUTTON_ZUID_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(2)) {
         if(DEBUG_MODE){Serial.println("Button false positive");}
         buttonStateZuid = BUTTON_ZUID_STATE_RELEASED;
@@ -137,11 +132,9 @@ void buttonLoop() {
           setOvergangDirection("zuid");
           setOvergangState(2);
         }
-        //        buttonZuidPressedEntry();
       }
       break;
     case BUTTON_ZUID_STATE_PRESSED:
-      //      Serial.println("case: BUTTON_ZUID_STATE_PRESSED");
       if (buttonHardwareUp(2)) {
         buttonStateZuid = BUTTON_ZUID_STATE_CHECK_RELEASED;
       }
@@ -157,14 +150,12 @@ void buttonLoop() {
   }
   switch (buttonStateOost) {
     case BUTTON_OOST_STATE_RELEASED:
-      //      Serial.println("case: BUTTON_OOST_STATE_RELEASED");
       if (buttonHardwareDown(1)) {
         if(DEBUG_MODE){Serial.println("check: ButtonHardwareDown[1]");}
         buttonStateOost = BUTTON_OOST_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_OOST_STATE_CHECK_PRESSED:
-      //      Serial.println("case: BUTTON_OOST_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(1)) {
         if(DEBUG_MODE){Serial.println("Button false positive");}
         buttonStateOost = BUTTON_OOST_STATE_RELEASED;
@@ -181,11 +172,9 @@ void buttonLoop() {
           buttonsPressed[1] = 1;
           setOvergangState(7);
         }
-        //        buttonOostPressedEntry();
       }
       break;
     case BUTTON_OOST_STATE_PRESSED:
-      //      Serial.println("case: BUTTON_OOST_STATE_PRESSED");
       if (buttonHardwareUp(1)) {
         buttonStateOost = BUTTON_OOST_STATE_CHECK_RELEASED;
       }
@@ -201,14 +190,12 @@ void buttonLoop() {
   }
   switch (buttonStateWest) {
     case BUTTON_WEST_STATE_RELEASED:
-      //      Serial.println("case: BUTTON_WEST_STATE_RELEASED");
       if (buttonHardwareDown(3)) {
         if(DEBUG_MODE){Serial.println("check: ButtonHardwareDown[3]");}
         buttonStateWest = BUTTON_WEST_STATE_CHECK_PRESSED;
       }
       break;
     case BUTTON_WEST_STATE_CHECK_PRESSED:
-      //      Serial.println("case: BUTTON_WEST_STATE_CHECK_PRESSED");
       if (buttonHardwareUp(3)) {
         if(DEBUG_MODE){Serial.println("Button false positive");}
         buttonStateWest = BUTTON_WEST_STATE_RELEASED;
@@ -229,7 +216,6 @@ void buttonLoop() {
       }
       break;
     case BUTTON_WEST_STATE_PRESSED:
-      //      Serial.println("case: BUTTON_WEST_STATE_PRESSED");
       if (buttonHardwareUp(3)) {
         buttonStateWest = BUTTON_WEST_STATE_CHECK_RELEASED;
       }
@@ -244,50 +230,6 @@ void buttonLoop() {
       break;
   }
 }
-//void buttonNoordPressedEntry() {
-//  buttonNoordLogic();
-//}
-//void buttonZuidPressedEntry() {
-//  buttonZuidLogic();
-//}
-//
-//void buttonOostPressedEntry() {
-//  buttonOostLogic();
-//}
-//
-//void buttonWestPressedEntry() {
-//  buttonWestLogic();
-//}
-//
-//void buttonNoordPressedDo() {
-////  Mag leeg zijn
-//}
-//void buttonZuidPressedDo() {
-////  Mag leeg zijn
-//}
-//
-//void buttonOostPressedDo() {
-////  Mag leeg zijn
-//}
-//
-//void buttonWestPressedDo() {
-////  Mag leeg zijn
-//}
-//
-//void buttonNoordPressedExit() {
-////  Mag leeg zijn
-//}
-//void buttonZuidPressedExit() {
-////  Mag leeg zijn
-//}
-//
-//void buttonOostPressedExit() {
-////  Mag leeg zijn
-//}
-//
-//void buttonWestPressedExit() {
-////  Mag leeg zijn
-//}
 //
 //
 //void buttonReleasedEntry(int buttonNumber) {
